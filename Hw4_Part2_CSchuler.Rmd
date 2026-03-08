@@ -1,0 +1,508 @@
+---
+title: "HW4_Part2_CSchuler"
+output:html_document: default
+date: "2026-03-05"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+```{r library setup}
+
+library(tidyverse)
+library(ggplot2)
+library(ggridges)
+library(lubridate)
+library(ggrepel)
+library(colorspace)
+
+```
+
+
+```{r Plot4}
+
+#4
+cars93 <- MASS::Cars93
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")
+
+```
+
+```{r Plot4a,d,e - lm}
+
+#4a,d,e - lm
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "lm", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)") +
+labs(title = "Geometric Smoothing: lm") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2")
+)
+
+```
+
+```{r Plot4a,d,e - glm}
+
+#4a,d,e - glm
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "glm", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: glm") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4a,d,e - gam}
+
+#4a,d,e - gam
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x), color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: gam") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4b,d,e}
+
+#4b,d,e
+cars93 <- MASS::Cars93
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = TRUE, method = "loess", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: loess") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4b,d,e - lm}
+
+#4b,d,e - lm
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = TRUE, method = "lm", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: lm") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4b,d,e - glm}
+
+#4b,d,e - glm
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = TRUE, method = "glm", formula = y ~ x, color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: glm") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4b,d,e - gam}
+
+#4b,d,e - gam
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = TRUE, method = "gam", formula = y ~ s(x), color = "#0072B2") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: gam") +
+theme(
+  plot.title = element_text(size = 14, color = "#0072B2"))
+
+```
+
+```{r Plot4c,d,e, 8fe388}
+
+#4c,d,e, 8fe388
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#8fe388") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: loess") +
+theme(
+  plot.title = element_text(size = 14, color = "#8fe388"))
+
+```
+
+```{r Plot4c,d,e - lm, 8fe388}
+
+#4c,d,e - lm, 8fe388
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "lm", formula = y ~ x, color = "#8fe388") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: lm") +
+theme(
+  plot.title = element_text(size = 14, color = "#8fe388"))
+
+```
+
+```{r Plot4c,d,e - glm, 8fe388}
+
+#4c,d,e - glm, 8fe388
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "glm", formula = y ~ x, color = "#8fe388") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: glm") +
+theme(
+  plot.title = element_text(size = 14, color = "#8fe388"))
+
+```
+
+```{r Plot4c,d,e - gam, 8fe388}
+
+#4c,d,e - gam, 8fe388
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x), color = "#8fe388") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: gam") +
+theme(
+  plot.title = element_text(size = 14, color = "#8fe388"))
+
+```
+
+```{r Plot4c,d,e, fe8d6d}
+
+#4c,d,e, fe8d6d
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#fe8d6d") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: loess") +
+theme(
+  plot.title = element_text(size = 14, color = "#fe8d6d"))
+
+```
+
+```{r Plot4c,d,e - lm, fe8d6d}
+
+#4c,d,e - lm, fe8d6d
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "lm", formula = y ~ x, color = "#fe8d6d") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: lm") +
+theme(
+  plot.title = element_text(size = 14, color = "#fe8d6d"))
+
+```
+
+```{r Plot4c,d,e - glm, fe8d6d}
+
+#4c,d,e - glm, fe8d6d
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "glm", formula = y ~ x, color = "#fe8d6d") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: glm") +
+theme(
+  plot.title = element_text(size = 14, color = "#fe8d6d"))
+
+```
+
+```{r Plot4c,d,e - gam, fe8d6d}
+
+#4c,d,e - gam, fe8d6d
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x), color = "#fe8d6d") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: gam") +
+theme(
+  plot.title = element_text(size = 14, color = "#fe8d6d"))
+
+```
+
+```{r Plot4c,d,e, 7c6bea}
+
+#4c,d,e, 7c6bea
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "loess", formula = y ~ x, color = "#7c6bea") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: loess") +
+theme(
+  plot.title = element_text(size = 14, color = "#7c6bea"))
+
+```
+
+```{r Plot4c,d,e - lm, 7c6bea}
+
+#4c,d,e - lm, 7c6bea
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "lm", formula = y ~ x, color = "#7c6bea") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: lm") +
+theme(
+  plot.title = element_text(size = 14, color = "#7c6bea"))
+
+```
+
+```{r Plot4c,d,e - glm, 7c6bea}
+
+#4c,d,e - glm, 7c6bea
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "glm", formula = y ~ x, color = "#7c6bea") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: glm") +
+theme(
+  plot.title = element_text(size = 14, color = "#7c6bea"))
+
+```
+
+```{r Plot4c,d,e - gam, 7c6bea}
+
+#4c,d,e - gam, 7c6bea
+ggplot(cars93, aes(x = Price, y = Fuel.tank.capacity)) +
+geom_point(color = "grey60") +
+geom_smooth(se = FALSE, method = "gam", formula = y ~ s(x), color = "#7c6bea") +
+scale_x_continuous(
+name = "price (USD)",
+breaks = c(20, 40, 60),
+labels = c("$20,000", "$40,000", "$60,000")
+) +
+scale_y_continuous(name = "fuel-tank capacity\n(US gallons)")+
+labs(title = "Geometric Smoothing: gam") +
+theme(
+  plot.title = element_text(size = 14, color = "#7c6bea"))
+
+```
+
+```{r Plot5}
+
+#5
+load("G:/My Drive/Personal/Grad Program/DSC 502 - Data Visualization for EDA/R Scripts./preprint_growth.rda")
+
+head(preprint_growth)
+
+preprint_growth %>% filter(archive == "bioRxiv") %>%
+filter(count > 0) -> biorxiv_growth
+
+preprints<-preprint_growth %>% filter(archive %in%
+c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")) %>%filter(count > 0) %>%
+mutate(archive = factor(archive, levels = c("bioRxiv", "arXiv q-bio", "PeerJ Preprints")))
+
+preprints_final <- filter(preprints, date == ymd("2017-01-01"))
+
+ggplot(preprints) +
+aes(date, count, color = archive, fill = archive) +
+geom_line(linewidth = 1) +
+scale_y_continuous(
+limits = c(0, 600), expand = c(0, 0),
+name = "preprints / month",
+sec.axis = dup_axis( #this part is for the second y axis
+breaks = preprints_final$count, #and we use the counts to position our labels
+labels = c("arXivq-bio", "PeerJPreprints", "bioRxiv"),
+name = NULL)
+) +
+scale_x_date(name = "year",
+limits = c(min(biorxiv_growth$date), ymd("2017-01-01"))) +
+scale_color_manual(values = c("#0072b2", "#D55E00", "#009e73"),
+name = NULL) +
+theme(legend.position = "none")
+
+```
+
+```{r Plot5a}
+#5a
+preprint_full = preprint_growth %>% drop_na() %>% filter(count > 0, year(date) > 2004)
+head(preprint_full)
+
+```
+
+```{r Plot5b}
+#5b
+preprint_filter = preprint_full %>% filter(archive %in% c("bioRxiv", "F1000Research"))
+head(preprint_filter)
+
+preprint_final = filter(preprint_filter, date == ymd("2017-01-01"))
+
+```
+
+```{r Plot5c}
+#5c
+ggplot(preprint_filter) +
+aes(date, count, color = archive, fill = archive) +
+geom_line(linewidth = 1) +
+scale_y_continuous(
+limits = c(0, 600), expand = c(0, 0),
+name = "preprints / month",
+sec.axis = dup_axis( 
+breaks = preprint_final$count, 
+labels = c("F1000Research", "bioRxiv"),
+name = NULL)
+) +
+scale_x_date(name = "year",
+limits = c(min(preprint_filter$date), ymd("2017-01-01"))) +
+scale_color_manual(values = c("bioRxiv" = "#7c6bea", "F1000Research" = "#fe8d6d"),
+name = NULL) +
+theme(legend.position = "none")
+
+```
+
+```{r Plot5d}
+#5d
+ggplot(preprint_filter) +
+aes(date, count, color = archive, fill = archive) +
+geom_line(linewidth = 1) +
+scale_y_continuous(
+limits = c(0, 600), expand = c(0, 0),
+name = "preprints / month"
+) +
+scale_x_date(name = "year",
+limits = c(min(preprint_filter$date), ymd("2017-01-01"))) +
+scale_color_manual(values = c("bioRxiv" = "#7c6bea", "F1000Research" = "#fe8d6d"),
+name = NULL) +
+theme(legend.position = "right")
+
+```
+
+```{r Plot5e}
+#5e
+ggplot(preprint_filter) +
+aes(date, count, color = archive, fill = archive) +
+geom_line(linewidth = 1) +
+scale_y_continuous(
+limits = c(0, 600), expand = c(0, 0),
+name = "preprints / month"
+) +
+scale_x_date(name = "year",
+limits = c(ymd("2014-02-01"), ymd("2017-01-01"))) +
+scale_color_manual(values = c("bioRxiv" = "#7c6bea", "F1000Research" = "#fe8d6d"),
+name = NULL) +
+theme(legend.position = "right")
+
+```
+
+```{r Plot5f}
+#5f
+ggplot(preprint_filter) +
+aes(date, count, color = archive, fill = archive) +
+geom_line(linewidth = 1) +
+scale_y_continuous(
+limits = c(0, 600), expand = c(0, 0),
+name = "preprints / month"
+) +
+scale_x_date(name = "year",
+limits = c(ymd("2014-02-01"), ymd("2017-01-01"))) +
+scale_color_manual(values = c("bioRxiv" = "#7c6bea", "F1000Research" = "#fe8d6d"),
+name = NULL) +
+labs(title = "Preprint Counts") +
+theme(legend.position = "right")
+
+```
+
